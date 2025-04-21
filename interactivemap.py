@@ -13,7 +13,7 @@ load_dotenv()
 st.markdown("""
 <style>
     .stApp {
-        background-color: #FDFD96;
+        background-color: #0e5691;
         font-family: 'Segoe UI', sans-serif;
     }
 
@@ -25,6 +25,7 @@ st.markdown("""
         font-size: 1.2em;
         padding: 12px;
         font-weight: bold;
+        color: white;
     }
 
     div.stButton > button {
@@ -38,6 +39,7 @@ st.markdown("""
     .streamlit-expanderHeader {
         font-size: 1.1em;
         font-weight: 600;
+        color: white;
     }
 
     .deck-tooltip {
@@ -58,12 +60,7 @@ tab1, tab2, tab3 = st.tabs(["🏠 Home", "🗺️ Map Viewer", "🧠 AI Site Ana
 
 # 🏠 HOME TAB
 with tab1:
-    st.image("HomeFinderLogo.png", width=200)
-    st.markdown("""
-    <div style="text-align: center;">
-        <img src="HomeFinder Logo.png" width="200">
-    </div>
-    """, unsafe_allow_html=True)
+    st.image("HomeFinderLogo.png", width=1024)
 
     st.title("🏙️ San Jose EIH Site Explorer")
     st.markdown("Welcome to the **Emergency Interim Housing (EIH)** Site Explorer powered by AI.")
