@@ -59,15 +59,8 @@ tab1, tab2, tab3 = st.tabs(["🏠 Home", "🗺️ Map Viewer", "🧠 AI Site Ana
 with tab1:
     # 🏠 HOME TAB HEADER
 
-    # 🎨 Centered HTML version (for visual control)
-    st.markdown(
-        """
-        <div style="text-align: center;">
-            <img src=".\HomeFinderLogo.png" width="1024">
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    # 🖼️ Display Logo – Streamlit native (for accessibility)
+    st.image("HomeFinderLogo.png", width=1024)
 
     st.title("🏙️ San Jose EIH Site Explorer")
     st.markdown("Welcome to the **Emergency Interim Housing (EIH)** Site Explorer powered by AI.")
