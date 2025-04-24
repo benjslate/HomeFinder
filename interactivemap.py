@@ -56,12 +56,12 @@ data = pd.read_csv('san_jose_eih_sites.csv')
 data = data.dropna(subset=['latitude', 'longitude'])
 
 # 🧭 Create tabs
-tab1, tab2, tab3 = st.tabs(["🏠 Home", "🗺️ Map Viewer", "🧠 AI Site Analysis"])
+tab1, tab2 = st.tabs(["🏠 Home & 🗺️ Map Viewer", "🧠 AI Site Analysis"])
 
-# 🏠 HOME TAB
+# 🏠 HOME & MAP VIEWER
 with tab1:
+    # Home tab content
     st.image("HomeFinderLogo.png", width=1024)
-
     st.title("🏙️ San Jose EIH Site Explorer")
     st.markdown("Welcome to the **Emergency Interim Housing (EIH)** Site Explorer powered by AI.")
     st.markdown("""
@@ -71,17 +71,17 @@ with tab1:
     - 🧠 Use AI to recommend optimal sites for development
     """)
 
-    # Feature 2: Data Freshness Indicator
+    # Feature: Data Freshness Indicator
     file_path = 'san_jose_eih_sites.csv'
     if os.path.exists(file_path):
         modified_time = os.path.getmtime(file_path)
         st.info(f"📅 Dataset last updated: {datetime.datetime.fromtimestamp(modified_time).strftime('%Y-%m-%d %H:%M:%S')}")
 
+    # Preview raw data
     with st.expander("📂 Preview Raw Data Table"):
         st.dataframe(data)
 
-# 🗺️ MAP VIEWER TAB
-with tab2:
+    # Map Viewer content
     st.header("📍 Interactive Map of Candidate EIH Sites")
 
     layer = pdk.Layer(
@@ -111,13 +111,13 @@ with tab2:
     st.pydeck_chart(r)
 
 # 🧠 AI ANALYSIS TAB
-with tab3:
+with tab2:
     st.header("🔍 AI-Powered Site Analysis")
     st.markdown("Select one or more candidate sites below for analysis:")
 
     selected = st.multiselect("📌 Choose sites to analyze:", options=data['site_name'].unique())
 
-    # Feature 1: AI Transparency Disclaimer
+    # AI Transparency Disclaimer
     with st.expander("📘 About this AI Analysis"):
         st.markdown("""
         - The recommendations provided here are generated using **OpenAI's GPT model**.
@@ -126,7 +126,7 @@ with tab3:
         - Use them as **a guide**, not a final decision-making tool.
         """)
 
-    # Feature 3: Manual Weighting for AI Evaluation
+    # Manual Weighting for AI Evaluation
     st.markdown("⚙️ **Customize Weighting** (optional)")
     weight_sentiment = st.slider("Weight for Sentiment Score", 0.0, 1.0, 0.33)
     weight_library = st.slider("Weight for Proximity to Library", 0.0, 1.0, 0.33)
