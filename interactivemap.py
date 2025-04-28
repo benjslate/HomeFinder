@@ -180,7 +180,9 @@ div.stButton > button:hover {
         .stSlider>div>div>div>div {
             color: black !important;
         }
+
     </style>
+            
             
 </style>
             
@@ -469,12 +471,13 @@ st.markdown("""
 with tab3:
     st.header("AI-Powered Site Analysis")
     # --- User-friendly explanation under the title ---
-    st.markdown(
-        "<div style='color:#222; font-size:1.08em;'>"
-        "Use this tool to evaluate candidate sites for Emergency Interim Housing (EIH) based on their proximity to key infrastructure and resident sentiment. "
-        "Adjust the weights to prioritize the factors that matter most to your analysis. The AI will help interpret the data and provide recommendations.</div>",
-        unsafe_allow_html=True
-    )
+    st.markdown("""
+        <div style="background:#f6f8fb; border-radius:12px; box-shadow:0 2px 14px rgba(23,78,166,0.06);
+        padding:18px 22px 10px 22px; margin-bottom:18px; color:#111; font-size:1.08em;">
+        <strong> Use this tool to evaluate candidate sites for Emergency Interim Housing (EIH) based on their proximity to key infrastructure and resident sentiment. Adjust the weights to prioritize the factors that matter most to your analysis. The AI will help interpret the data and provide recommendations.</strong>
+        </div>
+    """, unsafe_allow_html=True)
+    
     st.markdown("Select one or more candidate sites below for analysis:")
 
     selected = st.multiselect("Choose sites to analyze:", options=data['site_name'].unique())
@@ -566,9 +569,16 @@ Be specific in your reasoning based on the numbers given."""
 with tab4:
     st.header("Community Sentiment & Infrastructure Pulse")
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
+
     st.markdown("""
-    This dashboard provides a snapshot of community sentiment and infrastructure access across candidate sites for Emergency Interim Housing (EIH) in the city.
-    
+        <div style="background:#f6f8fb; border-radius:12px; box-shadow:0 2px 14px rgba(23,78,166,0.06);
+        padding:18px 22px 10px 22px; margin-bottom:18px; color:#111; font-size:1.08em;">
+        <strong> This dashboard provides a snapshot of community sentiment and infrastructure access across candidate sites for Emergency Interim Housing (EIH) in the city.</strong>
+        </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+
     **How to read these tables:**
     - **Top 3 Sites by Sentiment:**  
       These are the locations with the most positive overall community sentiment, reflecting where local residents and stakeholders have expressed the highest levels of support or optimism regarding the potential EIH project.
@@ -603,15 +613,14 @@ with tab4:
 
 # --------- RESIDENT MATCHING TAB ---------
 with tab5:
-    # Custom CSS: Make all main text black in this tab
+    # --- ENSURE INPUT LABELS APPEAR BLACK ---
     st.markdown("""
         <style>
-            /* Make all text elements black inside this tab */
-            .stApp, .stMarkdown, .stTextInput label, .stTextArea label, .stSubheader, .stInfo {
-                color: #111 !important;
-            }
-            /* st.info uses a blue background—set text to black for contrast */
-            [data-testid="stAlertContent"] {
+            label, .stTextInput label, .stTextArea label, 
+            div[data-baseweb="textarea"] label, div[data-baseweb="input"] label, 
+            .stTextInput > div > label, .stTextArea > div > label,
+            [class*="stTextArea"] label,
+            [class^="css-"][id^="label"] {
                 color: #111 !important;
             }
         </style>
@@ -619,7 +628,12 @@ with tab5:
 
     st.header("Resident-to-Site Matching")
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
-    st.markdown("This AI-powered tool helps caseworkers or planners assign individuals to the most suitable EIH site based on personal needs.")
+    st.markdown("""
+        <div style="background:#f6f8fb; border-radius:12px; box-shadow:0 2px 14px rgba(23,78,166,0.06);
+        padding:18px 22px 10px 22px; margin-bottom:18px; color:#111; font-size:1.08em;">
+        <strong>This AI-powered tool helps caseworkers or planners assign individuals to the most suitable EIH site based on personal needs.</strong>
+        </div>
+    """, unsafe_allow_html=True)
 
     name = st.text_input("Resident Name")
     needs = st.text_area("Describe the resident's needs, preferences, or constraints:")
@@ -644,21 +658,126 @@ Be thoughtful, empathetic, and specific."""
                 {"role": "user", "content": match_prompt}
             ]
         )
+
         st.subheader("Best Match Recommendation")
-        st.info(match_response.choices[0].message.content)
+        st.markdown(
+            f"""
+            <div style="
+                background: #f7fafd;
+                border-left: 6px solid #174ea6;
+                border-radius: 12px;
+                padding: 22px 26px;
+                margin-top: 14px;
+                margin-bottom: 12px;
+                box-shadow: 0 4px 18px rgba(23,78,166,0.08);
+                color: #111;
+                font-size: 1.13em;
+                font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+                letter-spacing: 0.01em;
+                line-height: 1.7;
+                ">
+                <strong style="font-size:1.17em;">Recommended Placement:</strong><br><br>
+                {match_response.choices[0].message.content}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
+
+
 
 # --------- FEEDBACK TAB ---------
 with tab6:
+    # CSS: Label is black, user's typed text in textarea is white, background stays as theme
+    st.markdown("""
+        <style>
+            label, .stTextInput label, .stTextArea label, 
+            div[data-baseweb="textarea"] label, div[data-baseweb="input"] label, 
+            .stTextInput > div > label, .stTextArea > div > label,
+            [class*="stTextArea"] label,
+            [class^="css-"][id^="label"] {
+                color: #111 !important;
+                font-weight: 500 !important;
+                font-size: 1.08em !important;
+            }
+            textarea {
+                color: #fff !important;            /* User's input is white */
+                font-size: 1.08em !important;
+                min-height: 120px !important;
+                /* background is not set, so theme applies */
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
     st.header("Post-Site Feedback Tracker")
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
-    st.markdown("Use this section to log performance data or feedback about EIH sites post-deployment for future learning.")
+    st.markdown("""
+        <div style="background:#f6f8fb; border-radius:12px; box-shadow:0 2px 14px rgba(23,78,166,0.06);
+        padding:18px 22px 10px 22px; margin-bottom:18px; color:#111; font-size:1.08em;">
+        <strong>Use this section to log performance data or feedback about EIH sites post-deployment for future learning.</strong>
+        </div>
+    """, unsafe_allow_html=True)
 
-    feedback_site = st.selectbox("Select Site for Feedback:", data['site_name'].unique())
-    feedback = st.text_area("Enter qualitative or performance-based feedback:")
+    with st.form(key="feedback_form", clear_on_submit=True):
+        feedback_site = st.selectbox("Select Site for Feedback:", data['site_name'].unique())
+        feedback = st.text_area("Enter qualitative or performance-based feedback:")
+        submit = st.form_submit_button("Save Feedback")
+    
+    if submit:
+        if feedback.strip() == "":
+            st.markdown(
+                """
+                <div style="
+                    background: #fde8e8;
+                    border-left: 6px solid #e2574c;
+                    border-radius: 9px;
+                    padding: 14px 18px;
+                    margin-top: 8px;
+                    margin-bottom: 10px;
+                    color: #742a21;
+                    font-size: 1.06em;">
+                    <strong>Feedback cannot be empty. Please enter your feedback before saving.</strong>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        else:
+            try:
+                with open("site_feedback_log.txt", "a", encoding="utf-8") as f:
+                    f.write(f"\n{datetime.datetime.now()} | Site: {feedback_site} | Feedback: {feedback}")
+                st.markdown(
+                    """
+                    <div style="
+                        background: #e7f8ea;
+                        border-left: 6px solid #4bb543;
+                        border-radius: 9px;
+                        padding: 16px 22px;
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                        color: #113a17;
+                        font-size: 1.11em;
+                        font-weight: 500;">
+                        <strong>✅ Feedback logged. Thank you for helping us improve EIH sites!</strong>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+            except Exception as e:
+                st.markdown(
+                    f"""
+                    <div style="
+                        background: #fde8e8;
+                        border-left: 6px solid #e2574c;
+                        border-radius: 9px;
+                        padding: 14px 18px;
+                        margin-top: 8px;
+                        margin-bottom: 10px;
+                        color: #742a21;
+                        font-size: 1.06em;">
+                        <strong>An error occurred while saving your feedback:</strong> {e}
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
 
-    if st.button("Save Feedback"):
-        with open("site_feedback_log.txt", "a") as f:
-            f.write(f"\n{datetime.datetime.now()} | Site: {feedback_site} | Feedback: {feedback}")
-        st.success("Feedback logged. Thank you!")
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
