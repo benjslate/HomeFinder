@@ -203,7 +203,7 @@ with tab1:
     st.markdown('<div style="text-align:center;"><span class="heading-animate">San Jose EIH Site Explorer</span></div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns([2, 1, 2])
     with col2:
-        st.image("HomeFinderLogo.png", width=64)
+        st.image("HomeFinderLogo.png", width=1024)
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
     st.markdown("""
     <div style="text-align:center;">
